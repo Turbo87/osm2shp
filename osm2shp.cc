@@ -1,5 +1,8 @@
 #include "osm/handler.hpp"
 
+#define OSMIUM_WITH_PBF_INPUT
+#define OSMIUM_WITH_XML_INPUT
+
 #include <osmium.hpp>
 
 int main(int argc, char* argv[]) {
@@ -9,11 +12,9 @@ int main(int argc, char* argv[]) {
                         return 1;
                 }
 
-                Osmium::init(true);
-
                 Osmium::OSMFile infile(argv[1]);
                 osm::handler handler(argv[2]);
-                infile.read(handler);
+                Osmium::Input::read(infile, handler);
                 return 0;
         } catch (const std::exception& ex) {
                 std::cerr << ex.what() << std::endl;
